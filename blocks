@@ -1,0 +1,20 @@
+#!/bin/bash
+################################################################################
+#
+# Blocks is a shell script for running HZ blockexplorer
+#
+# HZ :  Horizon (https://horizonplatform.io)
+# Copyright (c) pharesim (michael.wolf@horizonplatform.io)
+#               n00bsys0p (xander.shepherd@horizonplatform.io)
+#
+# Licensed under The MIT License
+# For full copyright and license information, please see the LICENSE.txt
+# Redistributions of files must retain the above copyright notice.
+#
+# @copyright     Copyright (c) pharesim (michael.wolf@horizonplatform.io)
+# @link          https://horizonplatform.io Next Horizon
+# @license       https://www.opensource.org/licenses/mit-license.php MIT License
+#
+################################################################################
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+php blockexplore.php "$@"

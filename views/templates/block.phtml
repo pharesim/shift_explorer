@@ -1,0 +1,119 @@
+<div class="container" style="padding-top: 50px;">
+
+    <h1>Block
+        <small>View information about a Shift Block</small>
+    </h1>
+
+    <table class="table table-striped" cellpadding="0" cellspacing="0">
+        <tbody>
+          <tr>
+              <th>
+                <a class="hash-link" href="?page=block&block=<?=$this->data['block']['hash']?>">
+                  <?=$this->data['block']['hash']?>
+                </a>
+                <span class="pull-right"></span>
+              </th>
+          </tr>
+        </tbody>
+    </table>
+    <div>
+        <button class="btn btn-primary"><?=$this->data['block']['conf']?></button>
+        <button class="btn btn-success cb"><span><?=$this->data['block']['gasUsed']?> Nrg Used</span></button>
+    </div>
+    <table class="table table-striped">
+        <tbody><tr>
+            <th colspan="2" style="text-align:left">Summary</th>
+        </tr>
+        <tr>
+            <td>Block Number</td>
+            <td><a href="?page=block&block=<?=$this->data['block']['number']?>"><?=hexdec($this->data['block']['number'])?></a></td>
+        </tr>
+        <tr>
+            <td>Received Time</td>
+            <td>
+                <?=hexdec($this->data['block']['timestamp'])?>
+            </td>
+        </tr>
+        <tr>
+            <td>Difficulty</td>
+            <td>
+                <?=hexdec($this->data['block']['difficulty'])?>
+            </td>
+        </tr>
+        <tr>
+            <td>Nonce</td>
+            <td><?=$this->data['block']['nonce']?></td>
+        </tr>
+        <tr>
+            <td>Size</td>
+            <td><?=hexdec($this->data['block']['size'])?></td>
+        </tr>
+        <tr>
+            <td>Miner</td>
+            <td><a href="?page=address&address=<?=$this->data['block']['miner']?>"><?=$this->data['block']['miner']?></a></td>
+        </tr>
+        <tr>
+            <td>Nrg Limit</td>
+            <td><?=hexdec($this->data['block']['gasLimit'])?></td>
+        </tr>
+        <tr>
+            <td>Data</td>
+            <td><?=$this->data['block']['extraData']?></td>
+        </tr>
+
+        <tr>
+            <td>Data (Translated)</td>
+            <td><?=$this->data['block']['dataFromHex']?></td>
+        </tr>
+
+        </tbody>
+    </table>
+
+    <h2 style="margin-top: 30px;">
+      Transactions
+      <small>- contained in current block</small>
+    </h2>
+
+    <?php foreach($this->data['block']['transactions'] as $transaction): ?>
+      <table class="table table-striped">
+          <tbody>
+          <tr>
+              <th colspan="2" style="text-align:left">Transaction #{{$index+1}}</th>
+          </tr>
+          <tr>
+              <td>Hash #</td>
+              <td><a href="?page=transaction&tx=<?=$transaction['hash']?>"><?=$transaction['hash']?></a></td>
+          </tr>
+          <tr>
+              <td>From</td>
+              <td><a href="?page=address&address=<?=$transaction['from']?>"><?=$transaction['from']?></a></td>
+          </tr>
+          <tr>
+              <td>To</td>
+              <td><a href="?page=address&address=<?=$transaction['to']?>"><?=$transaction['to']?></a></td>
+          </tr>
+          <tr>
+              <td>Nrg</td>
+              <td><?=$transaction['gas']?></a></td>
+          </tr>
+          <tr>
+              <td>Input</td>
+              <td><?=$transaction['input']?></a></td>
+          </tr>
+          <tr>
+              <td>Value</td>
+              <td><?=$transaction['value']?></a></td>
+          </tr>
+          </tbody>
+      </table>
+      <hr>
+    <?php endforeach; ?>
+
+  <?php if($this->data['block']['number'] != 0): ?>
+    <a href="?page=block&block=<?=hexdec($this->data['block']['number'])-1?>">Previous</a>
+  <?php endif; ?>
+
+  <?php if($this->data['current'] != $this->data['block']['number']): ?>
+    <a href="?page=block&block=<?=hexdec($this->data['block']['number'])+1?>">Next</a>
+  <?php endif; ?>
+</div>

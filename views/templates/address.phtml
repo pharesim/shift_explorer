@@ -1,0 +1,37 @@
+<div class="container" style="padding-top:3%;">
+
+    <h1>Address
+        <small>View information about a Shift Address</small>
+    </h1>
+
+    <table class="table table-striped" cellpadding="0" cellspacing="0">
+        <tbody>
+        <tr>
+            <th colspan="3" align="left"><a class="address-link" href="?page=address&address=<?=$this->data['address']['address']?>"><?=$this->data['address']['address']?></a> <span class="pull-right"></span></th>
+        </tr>
+        </tbody>
+    </table>
+    <table class="table table-striped">
+        <tbody>
+        <tr>
+            <td>Balance</td>
+            <td>
+                <?=number_format($this->data['address']['balance'],9)?>
+            </td>
+        </tr>
+        <tr>
+            <td>Transaction count (number of outgoing txs)</td>
+            <td>
+                <?=hexdec($this->data['address']['txCount'])?>
+            </td>
+        </tr>
+        <tr>
+            <td>Code</td>
+            <td>
+                <?=$this->data['address']['code']?>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
