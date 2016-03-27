@@ -125,6 +125,12 @@ class Controller
     $block['dataFromHex'] = utf8_encode($this->model->hex2str($block['extraData']));
     $currentBlock = $this->model->fromBlockchain('eth_blockNumber');
     $block['conf'] = $currentBlock - $block['number'].' Confirmations';
+    // first blocks have timestamp == number, so we count down from the one which has a unix timestamp
+    if($block['number'] < 8889)
+    {
+    	$block['timestamp'] = 1441240544 - (8889 - ($block['number']));
+    }
+
     foreach($block['transactions'] as $key=>$transaction)
     {
     	$block['transactions'][$key]['ethValue'] = $transaction['value'] / 1000000000000000000;
