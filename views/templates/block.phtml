@@ -74,11 +74,11 @@
       <small>- contained in current block</small>
     </h2>
 
-    <?php foreach($this->data['block']['transactions'] as $transaction): ?>
+    <?php foreach($this->data['block']['transactions'] as $key=>$transaction): ?>
       <table class="table table-striped">
           <tbody>
           <tr>
-              <th colspan="2" style="text-align:left">Transaction #{{$index+1}}</th>
+              <th colspan="2" style="text-align:left">Transaction #<?=$key+1?></th>
           </tr>
           <tr>
               <td>Hash #</td>
@@ -94,15 +94,15 @@
           </tr>
           <tr>
               <td>Nrg</td>
-              <td><?=$transaction['gas']?></a></td>
+              <td><?=hexdec($transaction['gas'])?></a></td>
           </tr>
           <tr>
               <td>Input</td>
-              <td><?=$transaction['input']?></a></td>
+              <td><?=hexdec($transaction['input'])?></a></td>
           </tr>
           <tr>
               <td>Value</td>
-              <td><?=$transaction['value']?></a></td>
+              <td><?=$transaction['value'] / 1000000000000000000?></a></td>
           </tr>
           </tbody>
       </table>
