@@ -125,6 +125,11 @@ class Controller
     $block['dataFromHex'] = utf8_encode($this->model->hex2str($block['extraData']));
     $currentBlock = $this->model->fromBlockchain('eth_blockNumber');
     $block['conf'] = $currentBlock - $block['number'].' Confirmations';
+    foreach($block['transactions'] as $key=>$transaction)
+    {
+    	$block['transactions'][$key]['ethValue'] = $transaction['value'] / 1000000000000000000;
+    }
+
     $this->innerView->assign('current',$currentBlock);
     $this->innerView->assign('block',$block);
     return $this->innerView;
@@ -158,8 +163,6 @@ class Controller
       }
 
     }
-
-    $transaction['gasPrice'] = $transaction['gasPrice'];
 
     $transaction['ethValue'] = $transaction['value'] / 1000000000000000000;
 
