@@ -73,6 +73,12 @@ class Controller
     return $this->innerView;
   }
 
+  public function supply()
+  {
+  	$this->innerView->assign('supply', $this->model->getSupply());
+  	return $this->innerView;
+  }
+
   public function search($search)
   {
     $block   = null;
@@ -184,7 +190,7 @@ class Controller
     $address = array(
       'address' => $address,
       'balance' => $this->model->fromBlockchain($this->config['prefix'].'_getBalance',array($address)) / 1000000000000000000,
-      'txCount' => $this->model->fromBlockchain($this->config['prefix'].'_getTransactionCount',array($address)),
+      'txCount' => hexdec($this->model->fromBlockchain($this->config['prefix'].'_getTransactionCount',array($address))),
       'code'    => $this->model->fromBlockchain($this->config['prefix'].'_getCode',array($address))
     );
     $this->innerView->assign('address',$address);
@@ -249,6 +255,9 @@ class Controller
       case 'address':
         $this->innerView = $this->address($address);
         break;
+      case 'supply':
+      	$this->innerView = $this->supply();
+      	break;
       case 'home':
       default:
         $search = null;
