@@ -79,12 +79,17 @@ class Controller
     $tx      = null;
     $address = null;
 
+    if(substr($search, 0, 2) != '0x')
+    {
+    	$search = '0x'.dechex($search);
+    }
+
     $block = $this->model->fromBlockchain('eth_getBlockByNumber',array($search,false));
     if(empty($block))
     {
       $block = $this->model->fromBlockchain('eth_getBlockByHash',array($search,false));
     }
-    
+
     if(!empty($block))
     {
       $this->innerView->setTemplate('block');
@@ -240,7 +245,7 @@ class Controller
         $search = null;
         if(isset($this->request['searchFor']))
         {
-          $search = $this->request['searchFor'];
+          $search = trim($this->request['searchFor']);
         }
 
         $this->innerView = $this->home($search);
