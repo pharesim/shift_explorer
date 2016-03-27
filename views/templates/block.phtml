@@ -31,7 +31,7 @@
       <tr>
           <td>Received Time</td>
           <td>
-              <?=hexdec($this->data['block']['timestamp'])?>
+              <?=date('Y-m-d H:i:s',$this->data['block']['timestamp'])?> UTC
           </td>
       </tr>
       <tr>

@@ -1,8 +1,41 @@
 <div class="container" style="padding-top: 50px;">
-	<h1>Blocks</h1>
-	<?php foreach($this->data['blocks'] as $block): ?>
-		<div><a href="?page=block&block=<?=$block['number']?>"><?=hexdec($block['number'])?></a></div>
-	<?php endforeach; ?>
+	<h1>Latest Blocks</h1>
+	<table width="100%">
+		<thead>
+			<tr>
+				<th>Number</th>
+				<th>Time</th>
+				<th>Transactions</th>
+				<th>Gas used</th>
+				<th>Miner</th>
+			</tr>
+		</thead>
+		<?php foreach($this->data['blocks'] as $block): ?>
+		
+			<tbody>
+				<tr>
+					<td>
+						<a href="?page=block&block=<?=$block['number']?>">
+							<?=hexdec($block['number'])?>
+						</a>
+					</td>
+					<td>
+						<?=date('Y-m-d H:i:s',$block['timestamp'])?> UTC
+					</td>
+					<td><?=count($block['transactions'])?></td>
+					<td><?=hexdec($block['gasUsed'])?></td>
+					<td>
+						<a href="?page=address&address=<?=$block['miner']?>">
+							<?=$block['miner']?>
+						</a>
+					</td>
+				</tr>
+			</tbody>
+		<?php endforeach; ?>
+	</table>
 
-	<p>Supply: <?=$this->data['supply']?> SHF</p>
+	<p>
+		<h1>Supply</h1>
+		<?=$this->data['supply']?> SHF
+	</p>
 </div>
