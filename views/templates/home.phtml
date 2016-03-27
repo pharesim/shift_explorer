@@ -1,6 +1,8 @@
-<h1>Blocks</h1>
-<?php foreach($this->data['blocks'] as $block): ?>
-	<div><a href="?page=block&block=<?=$block['number']?>"><?=hexdec($block['number'])?></a></div>
-<?php endforeach; ?>
+<div class="container" style="padding-top: 50px;">
+	<h1>Blocks</h1>
+	<?php foreach($this->data['blocks'] as $block): ?>
+		<div><a href="?page=block&block=<?=$block['number']?>"><?=hexdec($block['number'])?></a></div>
+	<?php endforeach; ?>
 
-<p>Supply: <?=$this->data['supply']?> SHF</p>
+	<p>Supply: <?=$this->data['supply']?> SHF</p>
+</div>
