@@ -1,7 +1,7 @@
 <div class="container" style="padding-top: 50px;">
 	<h1>Latest Blocks</h1>
 	<div class="table-responsive">
-		<table class="table table-striped table-condensed">
+		<table class="table table-striped">
 			<thead>
 				<tr>
 					<th>Number</th>
@@ -11,9 +11,8 @@
 					<th>Miner</th>
 				</tr>
 			</thead>
-			<?php foreach($this->data['blocks'] as $block): ?>
-			
-				<tbody>
+			<tbody>
+				<?php foreach($this->data['blocks'] as $block): ?>
 					<tr>
 						<td>
 							<a href="?page=block&block=<?=$block['number']?>">
@@ -31,8 +30,8 @@
 							</a>
 						</td>
 					</tr>
-				</tbody>
-			<?php endforeach; ?>
+				<?php endforeach; ?>
+			</tbody>
 		</table>
 	</div>
 
