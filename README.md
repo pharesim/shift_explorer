@@ -5,6 +5,10 @@ Basically an enhanced fork of the etherparty explorer https://github.com/etherpa
 
 Copy config/config.php.default to config/config.php and edit according to your needs
 
+WEB: index.php
+
+API: api.php
+
 
 Dependencies
 ------------
@@ -13,4 +17,4 @@ php-curl
 
 ToDo
 ----
-create cli and api templates
+create cli templates
