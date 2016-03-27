@@ -17,7 +17,7 @@ class Model
 
 	public function fromBlockchain($method,$params=array())
 	{
-		$data['id']      = '42';
+		$data['id']      = rand(0,42);
 		$data['jsonrpc'] = '2.0';
 		$data['method']  = $method;
 		if(!empty($params))
@@ -26,7 +26,7 @@ class Model
 		}
 
 		$data_string = json_encode($data);
-		$ch = curl_init($this->config['shift']);
+		$ch = curl_init($this->config['server']);
 		curl_setopt($ch, CURLOPT_USERAGENT, 'SHIFTexplorer');
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
@@ -50,7 +50,7 @@ class Model
 
 	public function getSupply()
 	{
-		$blockNumber = $this->fromBlockchain('eth_blockNumber');
+		$blockNumber = $this->fromBlockchain($this->config['prefix'].'_blockNumber');
 		$supply      = 5000000;
 		if($blockNumber <= 28799)
 		{

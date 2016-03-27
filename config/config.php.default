@@ -1,9 +1,12 @@
 <?php
+/* coin server */
+$config['server'] = 'http://localhost:6666';
+
+/* coin prefix */
+$config['prefix'] = 'eth';
+
 /* debug */
 $config['debug'] = true;
 
 /* layout */
 $config['layout'] = 'default';
-
-/* shift server */
-$config['shift'] = 'http://localhost:6666';

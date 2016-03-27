@@ -58,11 +58,11 @@ class Controller
   {
     if(!$search)
     {
-      $latest = $this->model->fromBlockchain('eth_getBlockByNumber',array('latest',false));
+      $latest = $this->model->fromBlockchain($this->config['prefix'].'_getBlockByNumber',array('latest',false));
       for($i = 1; $i < 11; $i++)
       {
         $blocks[] = $latest;
-        $latest = $this->model->fromBlockchain('eth_getBlockByHash',array($latest['parentHash'],false));
+        $latest = $this->model->fromBlockchain($this->config['prefix'].'_getBlockByHash',array($latest['parentHash'],false));
       }
     } else {
       return $this->search($search);
@@ -84,10 +84,10 @@ class Controller
     	$search = '0x'.dechex($search);
     }
 
-    $block = $this->model->fromBlockchain('eth_getBlockByNumber',array($search,false));
+    $block = $this->model->fromBlockchain($this->config['prefix'].'_getBlockByNumber',array($search,false));
     if(empty($block))
     {
-      $block = $this->model->fromBlockchain('eth_getBlockByHash',array($search,false));
+      $block = $this->model->fromBlockchain($this->config['prefix'].'_getBlockByHash',array($search,false));
     }
 
     if(!empty($block))
@@ -96,14 +96,14 @@ class Controller
       return $this->block($block['number']);
     }
 
-    $tx = $this->model->fromBlockchain('eth_getTransactionByHash',array($search));
+    $tx = $this->model->fromBlockchain($this->config['prefix'].'_getTransactionByHash',array($search));
     if(!empty($tx))
     {
       $this->innerView->setTemplate('transaction');
       return $this->transaction($tx['hash']);
     }
 
-    $address = $this->model->fromBlockchain('eth_getBalance',array($search));
+    $address = $this->model->fromBlockchain($this->config['prefix'].'_getBalance',array($search));
     if($address > 0)
     {
       $this->innerView->setTemplate('address');
@@ -116,14 +116,14 @@ class Controller
 
   public function block($number)
   {
-    $block = $this->model->fromBlockchain('eth_getBlockByNumber',array($number,true));
+    $block = $this->model->fromBlockchain($this->config['prefix'].'_getBlockByNumber',array($number,true));
     if(empty($block))
     {
-      $block = $this->model->fromBlockchain('eth_getBlockByHash',array($number,true));
+      $block = $this->model->fromBlockchain($this->config['prefix'].'_getBlockByHash',array($number,true));
     }
 
     $block['dataFromHex'] = utf8_encode($this->model->hex2str($block['extraData']));
-    $currentBlock = $this->model->fromBlockchain('eth_blockNumber');
+    $currentBlock = $this->model->fromBlockchain($this->config['prefix'].'_blockNumber');
     $block['conf'] = $currentBlock - $block['number'].' Confirmations';
     // first blocks have timestamp == number, so we count down from the one which has a unix timestamp
     if($block['number'] < 8889)
@@ -144,7 +144,7 @@ class Controller
 
   public function transaction($hash)
   {
-    $transaction = $this->model->fromBlockchain('eth_getTransactionByHash',array($hash));
+    $transaction = $this->model->fromBlockchain($this->config['prefix'].'_getTransactionByHash',array($hash));
 
     if(!isset($transaction['blockHash']) || empty($transaction['blockHash']))
     {
@@ -156,13 +156,13 @@ class Controller
       $transaction['blockNumber'] = 'pending';
       $transaction['conf']        = 'pending';
     } else {
-      $transaction['conf'] = $this->model->fromBlockchain('eth_blockNumber') - $transaction['blockNumber'];
+      $transaction['conf'] = $this->model->fromBlockchain($this->config['prefix'].'_blockNumber') - $transaction['blockNumber'];
       if($transaction['conf'] == 0)
       {
         $transaction['conf'] = 'unconfirmed';
       }
 
-      $block = $this->model->fromBlockchain('eth_getBlockByNumber',array($transaction['blockNumber'],false));
+      $block = $this->model->fromBlockchain($this->config['prefix'].'_getBlockByNumber',array($transaction['blockNumber'],false));
       if(!empty($block))
       {
         $transaction['time'] = $block['timestamp'];
@@ -183,9 +183,9 @@ class Controller
   {
     $address = array(
       'address' => $address,
-      'balance' => $this->model->fromBlockchain('eth_getBalance',array($address)) / 1000000000000000000,
-      'txCount' => $this->model->fromBlockchain('eth_getTransactionCount',array($address)),
-      'code'    => $this->model->fromBlockchain('eth_getCode',array($address))
+      'balance' => $this->model->fromBlockchain($this->config['prefix'].'_getBalance',array($address)) / 1000000000000000000,
+      'txCount' => $this->model->fromBlockchain($this->config['prefix'].'_getTransactionCount',array($address)),
+      'code'    => $this->model->fromBlockchain($this->config['prefix'].'_getCode',array($address))
     );
     $this->innerView->assign('address',$address);
     return $this->innerView;
