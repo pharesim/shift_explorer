@@ -1,18 +1,16 @@
 PHP block explorer for Shift SHF
 =========================================
 
+Basically an enhanced fork of the etherparty explorer https://github.com/etherparty/explorer
 
-Edit config/config.php.default according to your needs and rename to config/config.php
+Copy config/config.php.default to config/config.php and edit according to your needs
 
 
 Dependencies
 ------------
-Shift
-Curl
+php-curl
 
 
-CLI
----
-coming soon:
-chmod +x blocks
-./blocks help
+ToDo
+----
+create cli and api templates
