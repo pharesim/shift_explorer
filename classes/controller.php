@@ -143,11 +143,6 @@ class Controller
 	$block['extraData']   = substr($block['extraData'],2);
 	$block['nonce']       = substr($block['nonce'],2);
 	$block['hash']        = substr($block['hash'],2);
-    // first blocks have timestamp == number, so we count down from the one which has a unix timestamp
-    if($block['number'] < 8889)
-    {
-    	$block['timestamp'] = 1441240544 - (8889 - ($block['number']));
-    }
 
     foreach($block['transactions'] as $key=>$transaction)
     {
