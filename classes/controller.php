@@ -141,8 +141,11 @@ class Controller
 	$block['conf']        = $currentBlock - $block['number'].' Confirmations';
 	$block['miner']       = substr($block['miner'],2);
 	$block['extraData']   = substr($block['extraData'],2);
-	$block['nonce']       = substr($block['nonce'],2);
 	$block['hash']        = substr($block['hash'],2);
+	$block['difficulty']  = hexdec($block['difficulty']);
+	$block['size']        = hexdec($block['size']);
+	$block['nonce']       = hexdec($block['nonce']);
+	$block['gasLimit']    = hexdec($block['gasLimit']);
 
     foreach($block['transactions'] as $key=>$transaction)
     {

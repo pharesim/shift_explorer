@@ -40,16 +40,16 @@
         <tr>
             <td>Difficulty</td>
             <td>
-                <?=hexdec($this->data['block']['difficulty'])?>
+                <?=$this->data['block']['difficulty'])?>
             </td>
         </tr>
         <tr>
             <td>Nonce</td>
-            <td><?=$this->data['block']['nonce']?></td>
+            <td><?=number_format($this->data['block']['nonce'])?></td>
         </tr>
         <tr>
             <td>Size</td>
-            <td><?=hexdec($this->data['block']['size'])?></td>
+            <td><?=$this->data['block']['size']?></td>
         </tr>
         <tr>
             <td>Miner</td>
@@ -57,7 +57,7 @@
         </tr>
         <tr>
             <td>Nrg Limit</td>
-            <td><?=hexdec($this->data['block']['gasLimit'])?></td>
+            <td><?=$this->data['block']['gasLimit']?></td>
         </tr>
         <tr>
             <td>Data</td>
