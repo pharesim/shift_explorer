@@ -61,6 +61,7 @@ class Controller
       $latest = $this->model->fromBlockchain($this->config['prefix'].'_getBlockByNumber',array('latest',false));
       for($i = 1; $i < 11; $i++)
       {
+      	$latest['miner'] = substr($latest['miner'],2);
         $blocks[] = $latest;
         $latest = $this->model->fromBlockchain($this->config['prefix'].'_getBlockByHash',array($latest['parentHash'],false));
       }
@@ -135,9 +136,13 @@ class Controller
       $block = $this->model->fromBlockchain($this->config['prefix'].'_getBlockByHash',array($number,true));
     }
 
-    $block['dataFromHex'] = utf8_encode($this->model->hex2str($block['extraData']));
-    $currentBlock = $this->model->fromBlockchain($this->config['prefix'].'_blockNumber');
-    $block['conf'] = $currentBlock - $block['number'].' Confirmations';
+	$block['dataFromHex'] = utf8_encode($this->model->hex2str($block['extraData']));
+	$currentBlock         = $this->model->fromBlockchain($this->config['prefix'].'_blockNumber');
+	$block['conf']        = $currentBlock - $block['number'].' Confirmations';
+	$block['miner']       = substr($block['miner'],2);
+	$block['extraData']   = substr($block['extraData'],2);
+	$block['nonce']       = substr($block['nonce'],2);
+	$block['hash']        = substr($block['hash'],2);
     // first blocks have timestamp == number, so we count down from the one which has a unix timestamp
     if($block['number'] < 8889)
     {
@@ -146,7 +151,12 @@ class Controller
 
     foreach($block['transactions'] as $key=>$transaction)
     {
-    	$block['transactions'][$key]['ethValue'] = $transaction['value'] / 1000000000000000000;
+		$block['transactions'][$key]['ethValue'] = $transaction['value'] / 1000000000000000000;
+		$block['transactions'][$key]['hash']     = substr($transaction['hash'],2);
+		$block['transactions'][$key]['from']     = substr($transaction['from'],2);
+		$block['transactions'][$key]['to']       = substr($transaction['to'],2);
+		$block['transactions'][$key]['gas']      = hexdec($transaction['gas']);
+		$block['transactions'][$key]['input']    = hexdec($transaction['input']);
     }
 
     $this->innerView->assign('current',$currentBlock);
@@ -187,6 +197,10 @@ class Controller
 
     $transaction['txprice'] = ($transaction['gas'] * $transaction['gasPrice']) / 1000000000000000000;
 
+    $transaction['hash'] = substr($transaction['hash'],2);
+    $transaction['from'] = substr($transaction['from'],2);
+    $transaction['to']   = substr($transaction['to'],2);
+
     $this->innerView->assign('tx',$transaction);
     return $this->innerView;
   }
@@ -198,7 +212,7 @@ class Controller
   	{
   		$address = '0x'.$address;
   	}
-  	
+
     $address = array(
       'address' => $address,
       'balance' => $this->model->fromBlockchain($this->config['prefix'].'_getBalance',array($address)) / 1000000000000000000,
