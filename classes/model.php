@@ -51,7 +51,7 @@ class Model
 	public function getSupply()
 	{
 		$blockNumber = $this->fromBlockchain($this->config['prefix'].'_blockNumber');
-		$supply      = 5000000;
+		$supply      = 6454612;
 		if($blockNumber <= 28799)
 		{
 			$supply += $blockNumber * 3;
