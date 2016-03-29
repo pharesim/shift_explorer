@@ -646,4 +646,4 @@ foreach($data['alloc'] as $addr=>$balance)
 	$sum += $balance['balance'] / 1000000000000000000;
 }
 
-echo number_format($sum,50);
+echo number_format($sum,0);
