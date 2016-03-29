@@ -87,7 +87,14 @@ class Controller
 
     if(substr($search, 0, 2) != '0x')
     {
-    	$search = '0x'.dechex($search);
+    	if(is_int($search))
+    	{
+    		$search = '0x'.dechex($search);
+    	}
+    	else
+    	{
+    		$search = '0x'.$search;
+    	}
     }
 
     $block = $this->model->fromBlockchain($this->config['prefix'].'_getBlockByNumber',array($search,false));
