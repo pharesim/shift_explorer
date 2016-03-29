@@ -209,7 +209,7 @@ class Controller
   	}
 
     $address = array(
-      'address' => $address,
+      'address' => substr($address,2),
       'balance' => $this->model->fromBlockchain($this->config['prefix'].'_getBalance',array($address)) / 1000000000000000000,
       'txCount' => hexdec($this->model->fromBlockchain($this->config['prefix'].'_getTransactionCount',array($address))),
       'code'    => $this->model->fromBlockchain($this->config['prefix'].'_getCode',array($address))
