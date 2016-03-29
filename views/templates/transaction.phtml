@@ -41,18 +41,18 @@
             <tr>
                 <td>Received Time</td>
                 <td>
-                    <?=hexdec($this->data['tx']['time'])?>
+                    <?=date('Y-m-d H:i:s',$this->data['tx']['time'])?>
                 </td>
             </tr>
             <tr>
                 <td>Included In Block</td>
                 <td>
-                    <a href="?page=block&block=<?=$this->data['tx']['blockNumber']?>"><?=hexdec($this->data['tx']['blockNumber'])?></a>
+                    <a href="?page=block&block=<?=$this->data['tx']['blockNumber']?>"><?=$this->data['tx']['blockNumber']?></a>
                 </td>
             </tr>
             <tr>
                 <td>Nrg Used</td>
-                <td><?=hexdec($this->data['tx']['gas'])?></td>
+                <td><?=$this->data['tx']['gas']?></td>
             </tr>
             <tr>
                 <td>Nrg Price</td>
@@ -60,7 +60,7 @@
             </tr>
             <tr>
                 <td>Number of transactions made by the sender prior to this one</td>
-                <td><?=hexdec($this->data['tx']['nonce'])?></td>
+                <td><?=$this->data['tx']['nonce']?></td>
             </tr>
             <tr>
                 <td>Transaction price</td>

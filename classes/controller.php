@@ -188,13 +188,15 @@ class Controller
 
     }
 
-    $transaction['ethValue'] = $transaction['value'] / 1000000000000000000;
-
-    $transaction['txprice'] = ($transaction['gas'] * $transaction['gasPrice']) / 1000000000000000000;
-
-    $transaction['hash'] = substr($transaction['hash'],2);
-    $transaction['from'] = substr($transaction['from'],2);
-    $transaction['to']   = substr($transaction['to'],2);
+	$transaction['ethValue']    = $transaction['value'] / 1000000000000000000;
+	$transaction['txprice']     = ($transaction['gas'] * $transaction['gasPrice']) / 1000000000000000000;
+	$transaction['hash']        = substr($transaction['hash'],2);
+	$transaction['from']        = substr($transaction['from'],2);
+	$transaction['to']          = substr($transaction['to'],2);
+	$transaction['blockHash']   = substr($transaction['blockHash'],2);
+	$transaction['blockNumber'] = hexdec($transaction['blockNumber']);
+	$transaction['gas']         = hexdec($transaction['gas']);
+	$transaction['nonce']       = hexdec($transaction['nonce']);
 
     $this->innerView->assign('tx',$transaction);
     return $this->innerView;
