@@ -194,6 +194,11 @@ class Controller
 
   public function address($address)
   {
+  	if(substr($address,0,2) != '0x')
+  	{
+  		$address = '0x'.$address;
+  	}
+  	
     $address = array(
       'address' => $address,
       'balance' => $this->model->fromBlockchain($this->config['prefix'].'_getBalance',array($address)) / 1000000000000000000,
