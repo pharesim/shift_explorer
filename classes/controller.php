@@ -200,6 +200,7 @@ class Controller
 	$transaction['blockNumber'] = hexdec($transaction['blockNumber']);
 	$transaction['gas']         = hexdec($transaction['gas']);
 	$transaction['nonce']       = hexdec($transaction['nonce']);
+	$transaction['input']        = $this->model->hex2str($transaction['input']);
 
     $this->innerView->assign('tx',$transaction);
     return $this->innerView;
