@@ -88,7 +88,7 @@ class Controller
 
     if(substr($search, 0, 2) != '0x')
     {
-    	if(is_int($search))
+    	if(is_numeric($search))
     	{
     		$search = '0x'.dechex($search);
     	}
