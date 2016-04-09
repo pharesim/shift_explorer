@@ -48,46 +48,18 @@ class Model
 	}
 
 
+/**
+ * calculate supply
+ *
+ * @todo  this is wrong, it doesn't count uncle rewards. planned solution is a richlist api call in shift.
+ * 
+ * @return int
+ */
 	public function getSupply()
 	{
 		$blockNumber = $this->fromBlockchain($this->config['prefix'].'_blockNumber');
-		$supply      = 6454612;
-		if($blockNumber <= 28799)
-		{
-			$supply += $blockNumber * 3;
-		}
-		elseif($blockNumber > 28799 && $blockNumber <= 57599)
-		{
-			$supply += 86397+(($blockNumber-28799)*2.9);
-		}
-		elseif($blockNumber > 57599 && $blockNumber <= 86399)
-		{
-			$supply += 169914+(($blockNumber-57599)*2.8); 
-		}
-		elseif($blockNumber > 86399 && $blockNumber <= 115199)
-		{
-			$supply += 250551+(($blockNumber-86399)*2.6);
-		}
-		elseif($blockNumber > 115199 && $blockNumber <= 143999)
-		{
-			$supply += 325428+(($blockNumber-115199)*2.4);
-		}
-		elseif($blockNumber > 143999 && $blockNumber <= 172799)
-		{
-			$supply += 394546+(($blockNumber-143999)*2.0);
-		}
-		elseif($blockNumber > 172799 && $blockNumber <= 230399)
-		{
-			$supply += 452144+(($blockNumber-172799)*1.5);
-		}
-		elseif($blockNumber > 230399)
-		{
-			$supply += 495342+(($blockNumber-230399)*1.0);
-		}
-		//when node staking is up: //xxx is block number where V1 switches to V2
-		//if($blockNumber > xxx) {
-		// 	$supply += ($blockNumber-xxx)*0.5;
-		// 	}
+		$supply      = 6651571;
+		$supply += $blockNumber * 2;
 		
 		return $supply;
 	}
