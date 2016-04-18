@@ -69,6 +69,7 @@ class Controller
       return $this->search($search);
     }
 
+    $this->innerView->assign('hashrate', $this->model->getHashrate());
     $this->innerView->assign('supply', $this->model->getSupply());
     $this->innerView->assign('blocks', $blocks);
     return $this->innerView;
@@ -77,6 +78,12 @@ class Controller
   public function supply()
   {
   	$this->innerView->assign('supply', $this->model->getSupply());
+  	return $this->innerView;
+  }
+
+  public function hashrate()
+  {
+  	$this->innerView->assign('hashrate', $this->model->getHashrate());
   	return $this->innerView;
   }
 
@@ -284,6 +291,9 @@ class Controller
         break;
       case 'supply':
       	$this->innerView = $this->supply();
+      	break;
+      case 'hashrate':
+      	$this->innerView = $this->hashrate();
       	break;
       case 'home':
       default:

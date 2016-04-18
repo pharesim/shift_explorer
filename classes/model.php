@@ -65,6 +65,24 @@ class Model
 	}
 
 
+	public function getHashrate($blocks = 25)
+	{
+		$latestBlock = $this->fromBlockchain($this->config['prefix'].'_getBlockByNumber',array('latest',false));
+		$totalDiff = $latestBlock['difficulty'];
+		$totalTime = 0;
+		for($i = 1; $i < $blocks; $i++)
+		{
+			$checkBlock = $this->fromBlockchain($this->config['prefix'].'_getBlockByNumber',array($latestBlock['number'] - $i,false));
+			$totalDiff += $checkBlock['difficulty'];
+		}
+
+		$blockTime = ($latestBlock['timestamp'] - $checkBlock['timestamp']) / $blocks;
+		$avgDiff = $totalDiff / $blocks;
+		$hashrate = $avgDiff / $blockTime;
+		return $hashrate;
+	}
+
+
 	public function hex2str($hex)
 	{
 		$str = '';
