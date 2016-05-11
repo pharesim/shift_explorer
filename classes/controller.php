@@ -87,6 +87,20 @@ class Controller
   	return $this->innerView;
   }
 
+  public function blockCount()
+  {
+  	$latest = $this->model->fromBlockchain($this->config['prefix'].'_getBlockByNumber',array('latest',false));
+  	$this->innerView->assign('blockcount', hexdec($latest['number']));
+  	return $this->innerView;
+  }
+
+  public function difficulty()
+  {
+  	$latest = $this->model->fromBlockchain($this->config['prefix'].'_getBlockByNumber',array('latest',false));
+  	$this->innerView->assign('difficulty', hexdec($latest['difficulty']));
+  	return $this->innerView;
+  }
+
   public function search($search)
   {
     $block   = null;
@@ -149,19 +163,28 @@ class Controller
 	$block['miner']       = substr($block['miner'],2);
 	$block['extraData']   = substr($block['extraData'],2);
 	$block['hash']        = substr($block['hash'],2);
-	$block['difficulty']  = hexdec($block['difficulty']);
-	$block['size']        = hexdec($block['size']);
-	$block['nonce']       = hexdec($block['nonce']);
-	$block['gasLimit']    = hexdec($block['gasLimit']);
+	foreach($block as $key=>$value)
+	{
+		if(!is_array($value) && substr($value,0,2) == '0x')
+		{
+			$block[$key] = hexdec($block[$key]);
+		}
+	}
+
 
     foreach($block['transactions'] as $key=>$transaction)
     {
-		$block['transactions'][$key]['ethValue'] = $transaction['value'] / 1000000000000000000;
-		$block['transactions'][$key]['hash']     = substr($transaction['hash'],2);
-		$block['transactions'][$key]['from']     = substr($transaction['from'],2);
-		$block['transactions'][$key]['to']       = substr($transaction['to'],2);
-		$block['transactions'][$key]['gas']      = hexdec($transaction['gas']);
-		$block['transactions'][$key]['input']    = hexdec($transaction['input']);
+		$block['transactions'][$key]['ethValue']    = $transaction['value'] / 1000000000000000000;
+		$block['transactions'][$key]['hash']        = substr($transaction['hash'],2);
+		$block['transactions'][$key]['from']        = substr($transaction['from'],2);
+		$block['transactions'][$key]['to']          = substr($transaction['to'],2);
+		foreach($block['transactions'][$key] as $k=>$v)
+		{
+			if(substr($v,0,2) == '0x')
+			{
+				$block['transactions'][$key][$k] = hexdec($transaction[$k]);
+			}
+		}
     }
 
     $this->innerView->assign('current',$currentBlock);
@@ -248,7 +271,7 @@ class Controller
             $number = $this->request[2];
           }
 
-          if(substr($number,0,2) != '0x')
+          if(substr($number,0,2) != '0x' && $number != 'latest')
           {
             $number = '0x'.dechex($number);
           }
@@ -294,6 +317,12 @@ class Controller
       	break;
       case 'hashrate':
       	$this->innerView = $this->hashrate();
+      	break;
+      case 'blockcount':
+      	$this->innerView = $this->blockCount();
+      	break;
+      case 'difficulty':
+      	$this->innerView = $this->difficulty();
       	break;
       case 'home':
       default:
