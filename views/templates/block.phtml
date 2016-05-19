@@ -20,7 +20,7 @@
   </div>
   <div>
       <button class="btn btn-primary"><?=$this->data['block']['conf']?></button>
-      <button class="btn btn-success cb"><span><?=hexdec($this->data['block']['gasUsed'])?> Nrg Used</span></button>
+      <button class="btn btn-success cb"><span><?=$this->data['block']['gasUsed']?> Nrg Used</span></button>
   </div>
   <div class="table-responsive">
     <table class="table table-striped">
@@ -29,7 +29,7 @@
         </tr>
         <tr>
             <td>Block Number</td>
-            <td><a href="?page=block&block=<?=$this->data['block']['number']?>"><?=hexdec($this->data['block']['number'])?></a></td>
+            <td><a href="?page=block&block=<?=$this->data['block']['number']?>"><?=$this->data['block']['number']?></a></td>
         </tr>
         <tr>
             <td>Received Time</td>
@@ -117,10 +117,10 @@
   <?php endif; ?>
 
   <?php if($this->data['block']['number'] != 0): ?>
-    <a href="?page=block&block=<?=hexdec($this->data['block']['number'])-1?>">Previous</a>
+    <a href="?page=block&block=<?=$this->data['block']['number']-1?>">Previous</a>
   <?php endif; ?>
 
   <?php if($this->data['current'] != $this->data['block']['number']): ?>
-    <a href="?page=block&block=<?=hexdec($this->data['block']['number'])+1?>">Next</a>
+    <a href="?page=block&block=<?=$this->data['block']['number']+1?>">Next</a>
   <?php endif; ?>
 </div>
