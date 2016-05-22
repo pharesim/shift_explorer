@@ -273,7 +273,12 @@ class Controller
 
           if(substr($number,0,2) != '0x' && $number != 'latest')
           {
-            $number = '0x'.dechex($number);
+          	if(is_int($number))
+          	{
+          		$number = dechex($number);
+          	}
+          	
+            $number = '0x'.$number;
           }
 
           break;
